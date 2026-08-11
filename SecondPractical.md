@@ -303,6 +303,76 @@ Here:
 * `echo` → Displays the result
 
 ---
+## File Access Using For Loop
+
+```bash
+#!/bin/bash
+
+for file in *
+do
+    echo "Checking: $file"
+
+    if [ -e "$file" ]
+    then
+        echo "  File or directory exists"
+    fi
+
+    if [ -f "$file" ]
+    then
+        echo "  Regular file"
+    fi
+
+    if [ -d "$file" ]
+    then
+        echo "  Directory"
+    fi
+
+    if [ -r "$file" ]
+    then
+        echo "  File is readable"
+    fi
+
+    if [ -w "$file" ]
+    then
+        echo "  File is writable"
+    fi
+
+    if [ -x "$file" ]
+    then
+        echo "  File is executable"
+    fi
+
+    echo "--------------------"
+done
+```
+
+### File Test Operators
+
+| Operator | Meaning                  |
+| -------- | ------------------------ |
+| `-e`     | File or directory exists |
+| `-f`     | Regular file exists      |
+| `-d`     | Directory exists         |
+| `-r`     | File is readable         |
+| `-w`     | File is writable         |
+| `-x`     | File is executable       |
+
+### Example Output
+
+```text
+Checking: example.txt
+  File or directory exists
+  Regular file
+  File is readable
+  File is writable
+--------------------
+Checking: test
+  File or directory exists
+  Directory
+  File is readable
+  File is writable
+--------------------
+```
 
 ## Common File Tests
 
