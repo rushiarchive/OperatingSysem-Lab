@@ -365,3 +365,112 @@ After understanding these basics, the next useful Bash topics to learn are:
 8. String operations
 9. Exit status and error handling
 10. Practical Bash automation scripts
+
+# 4. File Access Using For Loop
+
+This example demonstrates how to use a `for` loop to check whether files exist in the current directory.
+
+## Code
+
+```bash
+#!/bin/bash
+
+echo "Checking Files"
+
+for file in file1.txt file2.txt file3.txt
+do
+    if [ -e "$file" ]
+    then
+        echo "$file exists"
+    else
+        echo "$file does not exist"
+    fi
+done
+```
+
+## Example Output
+
+If `file1.txt` exists but `file2.txt` and `file3.txt` do not exist:
+
+```text
+Checking Files
+file1.txt exists
+file2.txt does not exist
+file3.txt does not exist
+```
+
+## Explanation
+
+The `for` loop checks each filename one by one:
+
+```bash
+for file in file1.txt file2.txt file3.txt
+```
+
+The `if` condition checks whether the file exists:
+
+```bash
+if [ -e "$file" ]
+```
+
+Here:
+
+* `-e` → Checks whether a file or directory exists
+* `$file` → Stores the current filename
+* `echo` → Displays the result
+
+---
+
+## Common File Tests
+
+Bash provides several operators for checking files:
+
+| Operator | Meaning                  |
+| -------- | ------------------------ |
+| `-e`     | File or directory exists |
+| `-f`     | Regular file exists      |
+| `-d`     | Directory exists         |
+| `-r`     | File is readable         |
+| `-w`     | File is writable         |
+| `-x`     | File is executable       |
+
+### Example
+
+```bash
+if [ -f "$file" ]
+then
+    echo "$file is a regular file"
+fi
+```
+
+---
+
+## Checking All `.txt` Files
+
+Instead of manually providing filenames, we can use `*.txt` to check all text files in the current directory.
+
+```bash
+#!/bin/bash
+
+echo "Checking Text Files"
+
+for file in *.txt
+do
+    if [ -f "$file" ]
+    then
+        echo "$file is a text file"
+    fi
+done
+```
+
+### Example Output
+
+```text
+Checking Text Files
+file1.txt is a text file
+notes.txt is a text file
+data.txt is a text file
+```
+
+This is useful when working with multiple files and performing file-related operations automatically.
+
