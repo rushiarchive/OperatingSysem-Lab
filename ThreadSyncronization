@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <pthread.h>
+
+int count = 0;
+pthread_mutex_t lock;
+
+void *work(void *args)
+{
+    for (int i = 0; i < 10000; i++) {
+        // printf("%d\n", i);
+        pthread_mutex_lock(&lock);
+        count++;
+        pthread_mutex_unlock(&lock);
+    }
+
+    printf("Count is: %d\n", count);
+    return NULL;
+}
+
+void *lazy(void *args)
+{
+    for (int i = 0; i < 10000; i++) {
+        // printf("User %d\n", i);
+        pthread_mutex_lock(&lock);
+        count++;
+        pthread_mutex_unlock(&lock);
+    }
+
+    printf("Count is: %d\n", count);
+    return NULL;
+}
+
+void *rest(void *args)
+{
+    int j = *(int *)args;
+
+    for (int i = 0; i < 10; i++) {
+        // printf("param %d is - %d\n", i, j);
+    }
+
+    return NULL;
+}
+
+int main()
+{
+    int id = 78;
+    pthread_t t1, t2, t3;
+
+    printf("Done\n");
+
+    pthread_mutex_init(&lock, NULL);
+
+    pthread_create(&t1, NULL, work, NULL);
+    pthread_create(&t2, NULL, lazy, NULL);
+    pthread_create(&t3, NULL, rest, &id);
+
+    printf("In main thread, new threads created\n");
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    pthread_join(t3, NULL);
+
+    pthread_mutex_destroy(&lock);
+
+    printf("Final count: %d\n", count);
+    printf("Done\n");
+
+    return 0;
+}
